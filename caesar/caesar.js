@@ -12,6 +12,7 @@ function cipher(char, key) {
     let isPunctuation = (charUnicode >= 32 && charUnicode <= 47) ? true : false;
 
     // Caesar's cipher = (character + key) % 26
+    // account for negative modulo (n % m + m) % m
     let cipherChar = isPunctuation ? char : String.fromCharCode(((((charUnicode + key - charCase) % 26) + 26) % 26) + charCase);
     return cipherChar
 }
