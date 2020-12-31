@@ -1,29 +1,20 @@
 let findTheOldest = function(people) {
     return people.reduce((oldest, person) => {
-        // if oldest object is empty, then current person is oldest
-        if (("name" in oldest) === false) {
-            for (key in person) {
-                oldest[key] = person[key];
-            }
-        }
+        let currentYear = new Date().getFullYear();
 
-        let date = new Date();
-        currentYear = date.getFullYear();
-
-        // if oldest has no death-date, set to this year
-        let oldestYearOfDeath = oldest.yearOfDeath ? oldest.yearOfDeath : currentYear;
+        // if oldest has no death-date, get age as of this year
+        let oldestAge = oldest.yearOfDeath ? oldest.yearOfDeath - oldest.yearOfBirth : currentYear - oldest.yearOfBirth;
 
         // if person with no death-date, get their age as of today
-        let personYearOfDeath = person.yearOfDeath ? person.yearOfDeath : currentYear;
+        let personAge = person.yearOfDeath ? person.yearOfDeath - person.yearOfBirth : currentYear - person.yearOfBirth;
 
         // replace existing oldest if current person is older than existing oldest
-        if ((personYearOfDeath - person.yearOfBirth) > (oldestYearOfDeath - oldest.yearOfBirth)) {
-            for (key in person) {
-                oldest[key] = person[key];
-            }
+        if (personAge > oldestAge) {
+            oldest = person;
         }
+
         return oldest;
-    }, {});
+    });
 }
 
 module.exports = findTheOldest
